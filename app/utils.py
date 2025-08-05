@@ -41,9 +41,9 @@ def get_prompt(jd: str, lang: str) -> str:
             **Nhiệm vụ**:
             1. Xác định mức độ kinh nghiệm yêu cầu cho vị trí này (ít kinh nghiệm, trung bình, hoặc cao cấp) dựa trên nội dung JD.
             2. Dựa vào mức độ đó, tạo **5 câu hỏi phỏng vấn chuyên sâu và phù hợp bằng tiếng Việt**, để đánh giá:
-               - Kỹ năng chuyên môn chính.
-               - Khả năng giải quyết vấn đề hoặc xử lý tình huống thực tế.
-               - Sự phù hợp với vai trò và tổ chức.
+               - Kỹ năng chuyên môn chính (3 câu).
+               - Khả năng giải quyết vấn đề hoặc xử lý tình huống thực tế (1 câu).
+               - Sự phù hợp với vai trò và tổ chức (1 câu).
 
             **Định nghĩa mức độ kinh nghiệm**:
             - **Ít kinh nghiệm (Entry-level, dưới 2 năm)**:
@@ -69,9 +69,9 @@ def get_prompt(jd: str, lang: str) -> str:
             **Your task**:
             1. Determine the required experience level (entry-level, mid-level, or senior-level) based on the JD.
             2. Generate **5 highly relevant interview questions** tailored to that level, aiming to assess:
-               - Core technical or functional skills.
-               - Real-world problem solving.
-               - Fit for the role and organization.
+               - Core technical or functional skills (3 questions).
+               - Real-world problem solving (1 question).
+               - Fit for the role and organization (1 question).
 
             **Define the experience levels**:
             - **Entry-level (under 2 years)**:
