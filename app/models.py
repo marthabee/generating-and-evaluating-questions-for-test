@@ -1,7 +1,9 @@
-from sqlalchemy import ARRAY, Column, BigInteger, Date, Integer, String, Text, ForeignKey, Boolean, DECIMAL, TIMESTAMP, JSON
+from sqlalchemy import ARRAY, Column, BigInteger, Date, Integer, String, Text, ForeignKey, Boolean, DECIMAL, TIMESTAMP, JSON, VARCHAR
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
+from app.db import Base
+from sqlalchemy.sql import func
 
 Base = declarative_base()
 
@@ -82,3 +84,38 @@ class TestResult(Base):
     graded_at = Column(TIMESTAMP)
     feedback = Column(Text)
     created_at = Column(TIMESTAMP, default=datetime.utcnow)
+
+class Application(Base):
+    __tablename__ = "applications"
+
+    application_id = Column(BigInteger, primary_key=True)
+    job_id = Column(BigInteger, ForeignKey("jobs.job_id", ondelete="CASCADE"))
+    candidate_id = Column(BigInteger, ForeignKey("users.user_id", ondelete="CASCADE"))
+    cv_id = Column(BigInteger, ForeignKey("candidate_cvs.cv_id"))
+    cover_letter = Column(Text)
+    ai_match_score = Column(DECIMAL(5, 2))
+    ai_analysis = Column(JSON)
+    reviewed_by = Column(BigInteger, ForeignKey("users.user_id"))
+    reviewed_at = Column(TIMESTAMP)
+    rejection_reason = Column(Text)
+    notes = Column(Text)
+    priority = Column(VARCHAR(20))
+    current_status = Column(VARCHAR(30))
+    submitted_at = Column(TIMESTAMP)
+    created_at = Column(TIMESTAMP)
+    updated_at = Column(TIMESTAMP)
+    updated_at = Column(TIMESTAMP, default=datetime.utcnow)
+
+class User(Base):
+    __tablename__ = "users"
+
+    user_id = Column(BigInteger, primary_key=True)
+    email = Column(String(255), unique=True, nullable=False)
+    password_hash = Column(String(255))
+    phone = Column(String(20))
+    full_name = Column(String(200), nullable=False)
+    role = Column(String(20))  # Bạn có thể thêm validate ở tầng ứng dụng
+    auth_provider = Column(String(20), default="LOCAL")
+    is_active = Column(Boolean, default=True)
+    created_at = Column(TIMESTAMP, default=func.now())
+    updated_at = Column(TIMESTAMP, default=func.now())
